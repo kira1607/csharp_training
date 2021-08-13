@@ -14,30 +14,51 @@ namespace WebAddressbookTests
 
     {
 
-        public GroupHelper(IWebDriver driver):
-            base(driver)
+        public GroupHelper(ApplicationManager manager):
+            base(manager)
         
         {
         }
-           
-                
-                public void RemoveGroup()
+
+                public GroupHelper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+
+            InitGroupCreation();
+            FillGroupForm(group);
+            Submit();
+            ReturntoGroupPage();
+            return this;
+
+        }
+        public GroupHelper Remove(int v)
+        {
+           manager.Navigator.GoToGroupsPage();
+            SelectGroup(1);
+            RemoveGroup();
+            ReturntoGroupPage();
+            return this;
+        }
+        public GroupHelper RemoveGroup()
                 {
                     driver.FindElement(By.Name("delete")).Click();
+                    return this;
                 }
 
-                public void SelectGroup(int index)
+                public GroupHelper SelectGroup(int index)
                 {
                     driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+                    return this;
                 }
 
 
-                public void Submit()
+                public GroupHelper Submit()
                 {
                     driver.FindElement(By.Name("submit")).Click();
+                    return this;
                 }
 
-                public void FillGroupForm(GroupData group)
+                public GroupHelper FillGroupForm(GroupData group)
                 {
                     driver.FindElement(By.Name("group_name")).Clear();
                     driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
@@ -45,36 +66,30 @@ namespace WebAddressbookTests
                     driver.FindElement(By.Name("group_name")).SendKeys(group.Header);
                     driver.FindElement(By.Name("group_name")).Clear();
                     driver.FindElement(By.Name("group_name")).SendKeys(group.Footer);
+                    return this;
                 }
 
-                public void InitGroupCreation()
+                public GroupHelper InitGroupCreation()
                 {
                     driver.FindElement(By.Name("new")).Click();
+            return this;
                 }
 
-                public void Return()
+                public GroupHelper ReturntoGroupPage()
+                {
+                driver.FindElement(By.LinkText("group page")).Click();
+                return this;
+                
+                }
+                public GroupHelper Return()
                 {
                     driver.FindElement(By.LinkText("Logout")).Click();
+            return this;
                 }
 
-                public void SubmitNewContact()
-                {
-                    driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
-                }
+               
+        
 
-                public void ContactData(ContactData contact)
-                {
-                    driver.FindElement(By.Name("firstname")).Click();
-                    driver.FindElement(By.Name("firstname")).Clear();
-                    driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-                    driver.FindElement(By.Name("lastname")).Clear();
-                    driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
-                }
-
-                public void AddContact()
-                {
-                    driver.FindElement(By.LinkText("add new")).Click();
-                }
-            }
-        }
+    }
+}
    
