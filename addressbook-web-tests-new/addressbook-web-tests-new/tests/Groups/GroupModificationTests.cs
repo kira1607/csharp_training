@@ -10,12 +10,12 @@ namespace WebAddressbookTests.tests
     {
     [TestFixture]
 
-    public class GroupModificationTests: TestBase
+    public class GroupModificationTests: AuthTestBase
     {
         [Test]
         public void GroupModificationTest()
     {
-            GroupData newData = new GroupData("test1120v");
+            GroupData newData = new GroupData("This is new group");
             newData.Header = null;
             newData.Footer = null;
 

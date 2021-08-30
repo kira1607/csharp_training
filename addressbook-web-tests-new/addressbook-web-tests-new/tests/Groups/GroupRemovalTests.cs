@@ -7,13 +7,19 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupRemovalTests : AuthTestBase
     {
         
         [Test]
         public void GroupRemovalTest()
         {
             {
+
+                GroupData group = new GroupData("test1");
+                group.Header = "test2";
+                group.Footer = "test3";
+
+              
                 app.Groups.Remove(1);
                 
             }

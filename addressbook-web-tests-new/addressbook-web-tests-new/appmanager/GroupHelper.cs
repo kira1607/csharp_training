@@ -22,6 +22,7 @@ namespace WebAddressbookTests
 
                 public GroupHelper Create(GroupData group)
         {
+            
             manager.Navigator.GoToGroupsPage();
 
             InitGroupCreation();
@@ -34,15 +35,40 @@ namespace WebAddressbookTests
 
         public GroupHelper Remove(int p)
         {
-           manager.Navigator.GoToGroupsPage();
-            SelectGroup(p);
-            RemoveGroup();
-            ReturntoGroupPage();
-            return this;
+            manager.Navigator.GoToGroupsPage();
+
+            if (!GroupExists())
+            {
+                GroupData group = new GroupData("test1");
+                group.Header = "test2";
+                group.Footer = "footer";
+                Create(group);
+                
+
+            }
+           
+                SelectGroup(p);
+                RemoveGroup();
+                ReturntoGroupPage();
+                return this;
+           
+
         }
+              
+
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            
+            if (!GroupExists())
+            {
+                GroupData group = new GroupData("test1");
+                group.Header = "test2";
+                group.Footer = "footer";
+                Create(group);
+
+
+            }
 
             SelectGroup(p);
             InitGroupModification();
@@ -52,6 +78,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool GroupExists()
+        {
+            return IsElementPresent(By.ClassName("group"));
+
+        }
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -87,8 +118,8 @@ namespace WebAddressbookTests
                  
                 {
                 Type(By.Name("group_name"), group.Name);
-                Type(By.Name("header_name"), group.Header);
-                Type(By.Name("footer_name"), group.Footer);
+                Type(By.Name("group_header"), group.Header);
+                Type(By.Name("group_footer"), group.Footer);
 
             
                 return this;
@@ -99,8 +130,8 @@ namespace WebAddressbookTests
 
         {
             Type(By.Name("group_name"), newData.Name);
-            Type(By.Name("header_name"), newData.Header);
-            Type(By.Name("footer_name"), newData.Footer);
+            Type(By.Name("group_header"), newData.Header);
+            Type(By.Name("group_footer"), newData.Footer);
 
 
             return this;

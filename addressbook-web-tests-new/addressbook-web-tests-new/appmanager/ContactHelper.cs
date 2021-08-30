@@ -29,6 +29,8 @@ namespace WebAddressbookTests
 
         public ContactHelper CreateContact(ContactData contact)
         {
+            manager.Navigator.GoToHomePage();
+
             AddContact();
             AddContactData(contact);
             SubmitNewContact();
@@ -38,9 +40,17 @@ namespace WebAddressbookTests
 
         }
 
-        public ContactHelper ModifyContact(int p, ContactData newContactData)
+        public ContactHelper ModifyContact(ContactData newContactData)
         {
-            ChooseContact(p);
+            manager.Navigator.GoToHomePage();
+
+            if (!ContactExists())
+            {
+                ContactData contact = new ContactData("Test-new", "User-new");
+                CreateContact(contact);
+            }
+
+            //ChooseContact(p);
             EditContact();
             AddNewContactData(newContactData);
             UpdateModification();
@@ -49,28 +59,41 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper EditContact()
-        {
-
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
-            //driver.FindElement(By.XPath("//a[@href='edit.php?id=["+ index + "]']/img[@alt='Edit']")).Click();
-            return this;    
-        }
-
+        
         public ContactHelper RemoveContact(int p)
         {
+            manager.Navigator.GoToHomePage();
+
+            if (!ContactExists())
+            {
+                ContactData contact = new ContactData("Test-new", "User-new");
+                CreateContact(contact);
+            }
+
             ChooseContact(p);
             DeleteContact();
-            
+
             return this;
         }
 
-        
+
+        public bool ContactExists()
+        {
+            return IsElementPresent(By.TagName("td"));
+        }
+
+
+        public ContactHelper EditContact()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            //driver.FindElement(By.XPath("//a[@href='edit.php?id=["+ index + "]']/img[@alt='Edit']")).Click();
+            return this;    
+        }                             
 
         public ContactHelper DeleteContact()
         
             {
-                acceptNextAlert = true;
+            acceptNextAlert = true;
                 driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
                 Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             
@@ -109,7 +132,7 @@ namespace WebAddressbookTests
 
         public ContactHelper ChooseContact(int index)
         {
-          
+            //driver.FindElement(By.Id("30")).Click();
             driver.FindElement(By.XPath("//div/form/table/tbody/tr/td[" + index + "]/input")).Click(); 
 
             return this;

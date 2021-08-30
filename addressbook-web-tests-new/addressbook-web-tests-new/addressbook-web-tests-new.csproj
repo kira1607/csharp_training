@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="appmanager\boolean.cs" />
     <Compile Include="appmanager\ContactHelper.cs" />
+    <Compile Include="AuthTestBase.cs" />
+    <Compile Include="LoginTests.cs" />
     <Compile Include="tests\Contacts\DeleteContactTests.cs" />
     <Compile Include="tests\Contacts\ModifyContactTests.cs" />
     <Compile Include="tests\Groups\GroupModificationTests.cs" />
