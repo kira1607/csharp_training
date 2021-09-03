@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace WebAddressbookTests.tests
+namespace WebAddressbookTests
 
     {
     [TestFixture]
@@ -15,11 +15,20 @@ namespace WebAddressbookTests.tests
         [Test]
         public void GroupModificationTest()
     {
-            GroupData newData = new GroupData("This is new group");
+            GroupData newData = new GroupData("This is THE new group");
             newData.Header = null;
             newData.Footer = null;
 
-            app.Groups.Modify(1, newData);
+            //List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Modify(0, newData);
+
+            //List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            //oldGroups[0].Name = newData.Name;
+            //oldGroups.Sort();
+            //newGroups.Sort();
+            //Assert.AreEqual(oldGroups, newGroups);
 
         }
     }

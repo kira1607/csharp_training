@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -16,10 +17,20 @@ namespace WebAddressbookTests
             GroupData group = new GroupData("test1");
             group.Header = "test2";
             group.Footer = "test3";
+
+            //List<GroupData> oldGroups = app.Groups.GetGroupList();
             
-            app.Groups.Create(group);           
+            app.Groups.Create(group);
+
+            //List<GroupData> newGroups = app.Groups.GetGroupList();
+            //oldGroups.Add(group);
+            //oldGroups.Sort();
+            //newGroups.Sort();
+            //Assert.AreEqual(oldGroups, newGroups);
+
            
         }
+        
         [Test]
         public void EmptyGroupCreationTest()
         {
@@ -27,8 +38,34 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-            app.Groups.Create(group);
-        }
+            //List<GroupData> oldGroups = app.Groups.GetGroupList();
 
+            app.Groups.Create(group);
+
+            //List<GroupData> newGroups = app.Groups.GetGroupList();
+            //oldGroups.Add(group);
+            //oldGroups.Sort();
+            //newGroups.Sort();
+            //Assert.AreEqual(oldGroups, newGroups);
+        }
+        [Test]
+        public void BadNameGroupCreationTest()
+        {
+            GroupData group = new GroupData("a'a");
+            group.Header = "";
+            group.Footer = "";
+
+            //List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Create(group);
+
+            //List<GroupData> newGroups = app.Groups.GetGroupList();
+            //oldGroups.Add(group);
+            //oldGroups.Sort();
+            //newGroups.Sort();
+            //Assert.AreEqual(oldGroups, newGroups);
+
+
+        }
     }
 }

@@ -33,26 +33,16 @@ namespace WebAddressbookTests
 
         }
 
+
         public GroupHelper Remove(int p)
         {
             manager.Navigator.GoToGroupsPage();
-
-            if (!GroupExists())
-            {
-                GroupData group = new GroupData("test1");
-                group.Header = "test2";
-                group.Footer = "footer";
-                Create(group);
-                
-
-            }
-           
+                                 
                 SelectGroup(p);
                 RemoveGroup();
                 ReturntoGroupPage();
                 return this;
            
-
         }
               
 
@@ -60,16 +50,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             
-            if (!GroupExists())
-            {
-                GroupData group = new GroupData("test1");
-                group.Header = "test2";
-                group.Footer = "footer";
-                Create(group);
-
-
-            }
-
             SelectGroup(p);
             InitGroupModification();
             FillGroupFormNew(newData);
@@ -78,11 +58,21 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool GroupExists()
-        {
-            return IsElementPresent(By.ClassName("group"));
+        //public List<GroupData> GetGroupList()
+        //{
+        //    List<GroupData> groups = new List<GroupData>();
+        //    manager.Navigator.GoToGroupsPage();
+        //    ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+        //    foreach (IWebElement element in elements)
+        //    {
+        //        groups.Add(new GroupData(element.Text));
+        //    }
 
-        }
+        //        return groups;
+        //}
+
+
+       
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -101,12 +91,25 @@ namespace WebAddressbookTests
                     return this;
                 }
 
-                public GroupHelper SelectGroup(int index)
+        public GroupHelper SelectGroup(int index)
                 {
-                    driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+                   if (!GroupExists())
+                {
+
+                GroupData group = new GroupData("test1");
+                group.Header = "test2";
+                group.Footer = "test3";
+                Create(group);
+            
+                }
+                driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index+1) + "]/input")).Click();
                     return this;
                 }
 
+        private bool GroupExists()
+        {
+            return IsElementPresent(By.TagName("span"));
+        }
 
         public GroupHelper Submit()
                 {

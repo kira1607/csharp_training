@@ -16,6 +16,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
+
     {
         public bool acceptNextAlert = true;
 
@@ -24,7 +25,6 @@ namespace WebAddressbookTests
             base(manager)
         {
         }
-
         
 
         public ContactHelper CreateContact(ContactData contact)
@@ -44,12 +44,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
 
-            if (!ContactExists())
-            {
-                ContactData contact = new ContactData("Test-new", "User-new");
-                CreateContact(contact);
-            }
-
             //ChooseContact(p);
             EditContact();
             AddNewContactData(newContactData);
@@ -63,30 +57,45 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact(int p)
         {
             manager.Navigator.GoToHomePage();
-
-            if (!ContactExists())
-            {
-                ContactData contact = new ContactData("Test-new", "User-new");
-                CreateContact(contact);
-            }
-
+                     
             ChooseContact(p);
             DeleteContact();
 
             return this;
         }
 
+        //public List<ContactData> GetContactList()
+        //{
+        //    {
+        //        List<ContactData> contacts = new List<ContactData>();
+        //        manager.Navigator.GoToHomePage();
+        //        ICollection<IWebElement> elements = driver.FindElements(By.XPath("//img[@alt='Edit']"));
+        //        foreach (IWebElement element in elements)
+        //        {
+        //            contacts.Add(new ContactData(element.Text, element.Text));
+        //        }
+
+        //        return contacts;
+        //    }
+        //}
+
 
         public bool ContactExists()
         {
-            return IsElementPresent(By.TagName("td"));
-        }
+            
+             return IsElementPresent(By.XPath("//input[starts-with(@title, 'Select')]"));
 
+        }
 
         public ContactHelper EditContact()
         {
+            if (!ContactExists())
+            {
+                ContactData contact = new ContactData("Test-new", "User-new");
+                CreateContact(contact);
+            }
+
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
-            //driver.FindElement(By.XPath("//a[@href='edit.php?id=["+ index + "]']/img[@alt='Edit']")).Click();
             return this;    
         }                             
 
@@ -122,8 +131,7 @@ namespace WebAddressbookTests
         }
     }
 
-       
-              
+                     
              public ContactHelper UpdateModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -132,7 +140,12 @@ namespace WebAddressbookTests
 
         public ContactHelper ChooseContact(int index)
         {
-            //driver.FindElement(By.Id("30")).Click();
+            if (!ContactExists())
+            {
+                ContactData contact = new ContactData("Test-new", "User-new");
+                CreateContact(contact);
+            }
+
             driver.FindElement(By.XPath("//div/form/table/tbody/tr/td[" + index + "]/input")).Click(); 
 
             return this;

@@ -3,6 +3,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -13,17 +15,20 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            {
+            //List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-                GroupData group = new GroupData("test1");
-                group.Header = "test2";
-                group.Footer = "test3";
+            app.Groups.Remove(0);
 
-              
-                app.Groups.Remove(1);
-                
-            }
+            //if (oldGroups != null)
+            //{
+            //    List<GroupData> newGroups = app.Groups.GetGroupList();
+            //    oldGroups.RemoveAt(0);
+            //    Assert.AreEqual(newGroups, oldGroups);
+            //    return;
+            //}
+
         }
-     
+               
+        }
     }
-}
+
