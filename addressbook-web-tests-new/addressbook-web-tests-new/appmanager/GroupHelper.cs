@@ -58,21 +58,26 @@ namespace WebAddressbookTests
             return this;
         }
 
-        //public List<GroupData> GetGroupList()
-        //{
-        //    List<GroupData> groups = new List<GroupData>();
-        //    manager.Navigator.GoToGroupsPage();
-        //    ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-        //    foreach (IWebElement element in elements)
-        //    {
-        //        groups.Add(new GroupData(element.Text));
-        //    }
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            if (GroupExists())
+            {
 
-        //        return groups;
-        //}
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groups.Add(new GroupData(element.Text));
+                }
+                return groups;
+
+            }
+            return null;
+        }
 
 
-       
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -106,7 +111,7 @@ namespace WebAddressbookTests
                     return this;
                 }
 
-        private bool GroupExists()
+        public bool GroupExists()
         {
             return IsElementPresent(By.TagName("span"));
         }
