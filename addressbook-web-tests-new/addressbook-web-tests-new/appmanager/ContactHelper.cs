@@ -19,13 +19,13 @@ namespace WebAddressbookTests
 
     {
         public bool acceptNextAlert = true;
-
+     
 
         public ContactHelper(ApplicationManager manager) :
             base(manager)
         {
         }
-        
+
 
         public ContactHelper CreateContact(ContactData contact)
         {
@@ -53,11 +53,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        
+
         public ContactHelper RemoveContact(int p)
         {
             manager.Navigator.GoToHomePage();
-                     
+
             ChooseContact(p);
             DeleteContact();
 
@@ -66,37 +66,55 @@ namespace WebAddressbookTests
 
         //public List<ContactData> GetContactList()
         //{
-        //    {
-        //        List<ContactData> contacts = new List<ContactData>();
-        //        manager.Navigator.GoToHomePage();
-        //        ICollection<IWebElement> elements = driver.FindElements(By.XPath("//img[@alt='Edit']"));
-        //        foreach (IWebElement element in elements)
-        //        {
-        //            contacts.Add(new ContactData(element.Text, element.Text));
-        //        }
 
-        //        return contacts;
+        //    List<ContactData> contacts = new List<ContactData>();
+
+        //    manager.Navigator.GoToHomePage();
+
+        //    ICollection<IWebElement> elementsFN = driver.FindElements(By.XPath("//td/input[(@name='selected[]')]/td"));
+        //    ICollection<IWebElement> elementsLN = driver.FindElements(By.XPath("//td/input[(@name='selected[]')]/td/td"));
+
+        //    //for (var i = 1; i < elementsFname.Count; i++)
+        //    //{
+        //    //    contacts.Add(new ContactData(elementsFname[i].Text, elementsLname[i].Text));
+        //    //}
+
+        //    //foreach (var elementFname in elementsFname)
+        //    //{
+        //    //    var index = elementsFname.IndexOf(elementFname);
+
+        //    //    contacts.Add(new ContactData(elementsFname[index].Text, elementsLname[index].Text));
+        //    //}
+
+            
+            
+        //        //var index = elementsFN.IndexOf(elementFN);
+
+        //        //contacts.Add(new ContactData(elementFN.Text, elementsLN[index].Text));
         //    }
+
+        //    return contacts;
         //}
+    
 
 
-        public bool ContactExists()
+        public ContactHelper AddNewContactIfNotExists()
         {
             
-             return IsElementPresent(By.XPath("//input[starts-with(@title, 'Select')]"));
+             if (IsElementPresent(By.XPath("//input[starts-with(@title, 'Select')]"))==false)
+             {
+                ContactData contact = new ContactData("Test-new", "User-new");
+                CreateContact(contact);
+                return this;
 
+             }
+            return null;
         }
 
         public ContactHelper EditContact()
         {
-            if (!ContactExists())
-            {
-                ContactData contact = new ContactData("Test-new", "User-new");
-                CreateContact(contact);
-            }
-
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
-            return this;    
+             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+             return this;    
         }                             
 
         public ContactHelper DeleteContact()
@@ -140,12 +158,7 @@ namespace WebAddressbookTests
 
         public ContactHelper ChooseContact(int index)
         {
-            if (!ContactExists())
-            {
-                ContactData contact = new ContactData("Test-new", "User-new");
-                CreateContact(contact);
-            }
-
+          
             driver.FindElement(By.XPath("//div/form/table/tbody/tr/td[" + index + "]/input")).Click(); 
 
             return this;

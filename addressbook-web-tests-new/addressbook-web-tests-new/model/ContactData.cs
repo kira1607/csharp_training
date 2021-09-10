@@ -73,7 +73,8 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return FirstName == other.FirstName & LastName == other.LastName;
+            return firstname == other.firstname& lastname == other.lastname;
+            
            
         }
         public override int GetHashCode()

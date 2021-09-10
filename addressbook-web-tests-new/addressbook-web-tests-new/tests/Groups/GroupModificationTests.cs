@@ -12,23 +12,29 @@ namespace WebAddressbookTests
 
     public class GroupModificationTests: AuthTestBase
     {
+
         [Test]
+        
+        
         public void GroupModificationTest()
     {
+            app.Groups.AddNewGroupIfNotExists();
+
             GroupData newData = new GroupData("This is THE new group");
             newData.Header = null;
             newData.Footer = null;
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+                List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            app.Groups.Modify(0, newData);
+                app.Groups.Modify(0, newData);
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+                List<GroupData> newGroups = app.Groups.GetGroupList();
 
-            oldGroups[0].Name = newData.Name;
-            oldGroups.Sort();
-            newGroups.Sort();
-            Assert.AreEqual(oldGroups, newGroups);
+                oldGroups[0].Name = newData.Name;
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
+            
 
         }
     }

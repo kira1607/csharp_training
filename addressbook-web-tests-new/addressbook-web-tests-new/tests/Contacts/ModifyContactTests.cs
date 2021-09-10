@@ -17,6 +17,8 @@ namespace WebAddressbookTests
         public void ModifyContactTest()
         {
             ContactData newContactData = new ContactData("Something new", null);
+            
+            app.NewContact.AddNewContactIfNotExists();
 
             app.NewContact.ModifyContact(newContactData);
         }

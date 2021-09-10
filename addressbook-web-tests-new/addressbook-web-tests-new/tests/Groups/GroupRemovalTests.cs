@@ -15,18 +15,18 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
+            app.Groups.AddNewGroupIfNotExists();
+
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            app.Groups.Remove(0);
+                app.Groups.Remove(0);
 
-            
                 List<GroupData> newGroups = app.Groups.GetGroupList();
                 oldGroups.RemoveAt(0);
                 Assert.AreEqual(oldGroups, newGroups);
-                return;
             }
-
-        }
+          
+          }
                
         }
     

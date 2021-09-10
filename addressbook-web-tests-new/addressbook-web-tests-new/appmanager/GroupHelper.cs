@@ -61,20 +61,15 @@ namespace WebAddressbookTests
         public List<GroupData> GetGroupList()
         {
             List<GroupData> groups = new List<GroupData>();
-            if (GroupExists())
-            {
+            manager.Navigator.GoToGroupsPage();
 
-                manager.Navigator.GoToGroupsPage();
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
                     groups.Add(new GroupData(element.Text));
                 }
                 return groups;
-
-            }
-            return null;
-        }
+          }
 
 
 
@@ -97,23 +92,23 @@ namespace WebAddressbookTests
                 }
 
         public GroupHelper SelectGroup(int index)
-                {
-                   if (!GroupExists())
-                {
-
-                GroupData group = new GroupData("test1");
-                group.Header = "test2";
-                group.Footer = "test3";
-                Create(group);
-            
-                }
+                { 
                 driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index+1) + "]/input")).Click();
                     return this;
                 }
 
-        public bool GroupExists()
+        public GroupHelper AddNewGroupIfNotExists()
         {
-            return IsElementPresent(By.TagName("span"));
+            if (IsElementPresent(By.TagName("span"))==false)
+            {
+                GroupData group = new GroupData("test1");
+                group.Header = "test2";
+                group.Footer = "test3";
+                Create(group);
+                return this;
+
+            }
+            return null;
         }
 
         public GroupHelper Submit()
