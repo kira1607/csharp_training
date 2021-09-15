@@ -64,38 +64,29 @@ namespace WebAddressbookTests
             return this;
         }
 
-        //public List<ContactData> GetContactList()
-        //{
+        public List<ContactData> GetContactList()
+        {
 
-        //    List<ContactData> contacts = new List<ContactData>();
+            List<ContactData> contacts = new List<ContactData>();
 
-        //    manager.Navigator.GoToHomePage();
+            manager.Navigator.GoToHomePage();
 
-        //    ICollection<IWebElement> elementsFN = driver.FindElements(By.XPath("//td/input[(@name='selected[]')]/td"));
-        //    ICollection<IWebElement> elementsLN = driver.FindElements(By.XPath("//td/input[(@name='selected[]')]/td/td"));
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+           
+            foreach (IWebElement element in elements)
+            {
+                
+                IWebElement contactLN = element.FindElement(By.CssSelector("td:nth-of-type(2)"));
+                IWebElement contactFN = element.FindElement(By.CssSelector("td:nth-of-type(3)"));
 
-        //    //for (var i = 1; i < elementsFname.Count; i++)
-        //    //{
-        //    //    contacts.Add(new ContactData(elementsFname[i].Text, elementsLname[i].Text));
-        //    //}
+                
+                contacts.Add(new ContactData(contactLN.Text, contactFN.Text));
 
-        //    //foreach (var elementFname in elementsFname)
-        //    //{
-        //    //    var index = elementsFname.IndexOf(elementFname);
-
-        //    //    contacts.Add(new ContactData(elementsFname[index].Text, elementsLname[index].Text));
-        //    //}
-
+            }    
             
-            
-        //        //var index = elementsFN.IndexOf(elementFN);
+           return contacts;
+        }
 
-        //        //contacts.Add(new ContactData(elementFN.Text, elementsLN[index].Text));
-        //    }
-
-        //    return contacts;
-        //}
-    
 
 
         public ContactHelper AddNewContactIfNotExists()
@@ -159,7 +150,11 @@ namespace WebAddressbookTests
         public ContactHelper ChooseContact(int index)
         {
           
-            driver.FindElement(By.XPath("//div/form/table/tbody/tr/td[" + index + "]/input")).Click(); 
+            driver.FindElement(By.XPath("//tr[@name='entry'][" + (index+1) + "]/td/input[@type='checkbox']")).Click();
+
+            ////tr/td/input[@name='selected[]'][" + (index+1) + "
+
+            //tr[@name='entry'][[index+1]]/td/input[@type='checkbox']
 
             return this;
         }
@@ -171,7 +166,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper AddContactData(ContactData contact)
+        public ContactHelper AddContactData (ContactData contact)
         {
            
             Type(By.Name("firstname"), contact.FirstName);

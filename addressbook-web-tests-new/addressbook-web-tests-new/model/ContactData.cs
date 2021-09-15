@@ -10,9 +10,9 @@ namespace WebAddressbookTests
     public class ContactData: IEquatable<ContactData>, IComparable<ContactData>
 
     {
-        private string firstname;
-        private string middlename = "";
         private string lastname;
+        private string middlename = "";
+        private string firstname;
         private string nickname = "";
         private string title = "";
         private string company = "";
@@ -35,21 +35,11 @@ namespace WebAddressbookTests
         private string amonyh = "";
         private string ayear = "";
 
-        public ContactData(string firstname, string lastname)
+        public ContactData(string lastname, string firstname)
         {
-            this.firstname = firstname;
             this.lastname = lastname;
-        }
-        public string FirstName
-        {
-            get
-            {
-                return firstname;
-            }
-            set
-            {
-                firstname = value;
-            }
+            this.firstname = firstname;
+            
         }
         public string LastName
         {
@@ -62,6 +52,18 @@ namespace WebAddressbookTests
                 lastname = value;
             }
         }
+        public string FirstName
+        {
+            get
+            {
+                return firstname;
+            }
+            set
+            {
+                firstname = value;
+            }
+        }
+        
 
         public bool Equals(ContactData other)
         {
@@ -73,25 +75,31 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return firstname == other.firstname& lastname == other.lastname;
-            
-           
+            return (lastname == other.lastname & firstname == other.firstname);
+
+
+
         }
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode()& LastName.GetHashCode();
+            return LastName.GetHashCode() & FirstName.GetHashCode();
             
         }
-        
+        public override String ToString()
+        {
+            return ("lastName = " + LastName) + ("firstName = " + FirstName);
+        }
+         
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return FirstName.CompareTo(other.FirstName) &LastName.CompareTo(other.LastName);
+            return LastName.CompareTo(other.LastName) & FirstName.CompareTo(other.FirstName);
             
         }
     }
 
 }
+    

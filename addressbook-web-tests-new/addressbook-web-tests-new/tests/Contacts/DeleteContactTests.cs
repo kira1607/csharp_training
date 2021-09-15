@@ -17,8 +17,20 @@ namespace WebAddressbookTests
         {
             app.NewContact.AddNewContactIfNotExists();
 
-            app.NewContact.RemoveContact(1);
+            List<ContactData> oldListContacts = app.NewContact.GetContactList();
+
+            app.NewContact.RemoveContact(0);
+
+            List<ContactData> newListContacts = app.NewContact.GetContactList();
+
+            oldListContacts.RemoveAt(0);
+           
+
+            Assert.AreEqual(oldListContacts, newListContacts);
+           
             
+            Console.WriteLine(oldListContacts.Count);
+
         }
 
        
