@@ -37,32 +37,15 @@ namespace WebAddressbookTests
 
         public ContactData(string lastname, string firstname)
         {
-            this.lastname = lastname;
-            this.firstname = firstname;
+            LastName = lastname;
+            FirstName = firstname;
 
         }
-        public string LastName
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
-        }
-        public string FirstName
-        {
-            get
-            {
-                return firstname;
-            }
-            set
-            {
-                firstname = value;
-            }
-        }
+        public string LastName { get; set; }
+      
+        public string FirstName { get; set; }
+       
+        public string Id { get; set; }
 
 
         public bool Equals(ContactData other)

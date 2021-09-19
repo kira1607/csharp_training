@@ -10,19 +10,19 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
-    public class GroupHelper: HelperBase
+    public class GroupHelper : HelperBase
 
     {
 
-        public GroupHelper(ApplicationManager manager):
+        public GroupHelper(ApplicationManager manager) :
             base(manager)
-        
+
         {
         }
 
-                public GroupHelper Create(GroupData group)
+        public GroupHelper Create(GroupData group)
         {
-            
+
             manager.Navigator.GoToGroupsPage();
 
             InitGroupCreation();
@@ -37,19 +37,19 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int p)
         {
             manager.Navigator.GoToGroupsPage();
-                                 
-                SelectGroup(p);
-                RemoveGroup();
-                ReturntoGroupPage();
-                return this;
-           
+
+            SelectGroup(p);
+            RemoveGroup();
+            ReturntoGroupPage();
+            return this;
+
         }
-              
+
 
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            
+
             SelectGroup(p);
             InitGroupModification();
             FillGroupFormNew(newData);
@@ -58,24 +58,38 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private List<GroupData> groupCache = null;
+
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupsPage();
+            if (groupCache == null)
+            {
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
 
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    groups.Add(new GroupData(element.Text));
+                    groupCache.Add(new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
-                return groups;
-          }
+                }
+            
+                return new List<GroupData>(groupCache);
 
+            }
 
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
+        }
 
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+    groupCache = null;
             return this;
         }
 
@@ -88,6 +102,7 @@ namespace WebAddressbookTests
         public GroupHelper RemoveGroup()
                 {
                     driver.FindElement(By.Name("delete")).Click();
+            groupCache = null;
                     return this;
                 }
 
@@ -113,8 +128,9 @@ namespace WebAddressbookTests
 
         public GroupHelper Submit()
                 {
-                    driver.FindElement(By.Name("submit")).Click();
-                    return this;
+                driver.FindElement(By.Name("submit")).Click();
+                groupCache = null;
+                return this;
                 }
 
         public GroupHelper FillGroupForm(GroupData group)

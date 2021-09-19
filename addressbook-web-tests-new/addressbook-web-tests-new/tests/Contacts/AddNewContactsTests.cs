@@ -22,6 +22,8 @@ namespace WebAddressbookTests
 
             app.NewContact.CreateContact(contact);
 
+            Assert.AreEqual(oldListContacts.Count + 1, app.NewContact.GetContactCount());
+
             List<ContactData> newListContacts = app.NewContact.GetContactList();
             
             Assert.AreEqual(oldListContacts.Count+1, newListContacts.Count);
