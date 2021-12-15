@@ -6,6 +6,7 @@ using System.Threading;
 using NUnit.Framework;
 using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -60,7 +61,7 @@ namespace WebAddressbookTests
                Assert.AreEqual(oldGroups, newGroups);
             
         }
-        
+
         //[Test]
         //public void BadNameGroupCreationTest()
         //{
@@ -82,5 +83,21 @@ namespace WebAddressbookTests
 
 
         //}
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            AddressbookDB db = new AddressbookDB();
+            List<GroupData> fromDb =  (from g in db.Groups select g).ToList();
+            db.Close();
+            end = DateTime.Now;
+            System.Console.WriteLine(end.Subtract(start));
+
+        }
     }
 }

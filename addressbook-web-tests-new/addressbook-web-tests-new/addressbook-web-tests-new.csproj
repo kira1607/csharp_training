@@ -44,6 +44,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\AddressbookDB.cs" />
     <Compile Include="tests\AllContactInfoComparisonTests.cs" />
     <Compile Include="appmanager\boolean.cs" />
     <Compile Include="appmanager\ContactHelper.cs" />
@@ -78,6 +79,9 @@
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
       <Version>2.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="MySql.Data">
+      <Version>8.0.27</Version>
     </PackageReference>
     <PackageReference Include="NUnit">
       <Version>2.6.7</Version>
